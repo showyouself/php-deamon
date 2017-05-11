@@ -25,18 +25,21 @@
 /bin/task.php           自编辑类必须基础这个类
 ```
 
-## 二、使用方法
+## 二、环境支持
 
 请检查当前环境是否支持 *swoole*
-使用命令`php --info |grep swoole` 查看是否已经启动swoole模块
-
-更多的swoole安装配置与基础：[编译安装swoole](http://zengbingo.com/p/268.html)
+使用命令`php --info |grep swoole` 查看是否已经启动swoole模块[编译安装swoole](http://zengbingo.com/p/268.html)
 
 如果要使用 **redis** ，配置：/bin/config.php/redis_config
-使用命令`php --info |grep redis` 查看是否已经启动swoole模块
-
-更多redis安装配置与基础：[安装配置redis(php)](http://zengbingo.com/p/392.html)
+使用命令`php --info |grep redis` 查看是否已经启动swoole模块[安装配置redis(php)](http://zengbingo.com/p/392.html)
 
 如果要使用 **mysql** ，配置：/bin/config.php/db_config
 
+## 三、使用方法
+* 自定义自己需要的类和文件，并且配置加入/bin/config.php/router_config
+* 自定义类必须继承类task
+* 在run方法中接收请求，请求的数据存在$this->request_data中
+* 可参考TorrentTotal
 
+## 服务启动
+`./admin start`
