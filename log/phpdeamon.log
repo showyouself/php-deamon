@@ -1,0 +1,20 @@
+[2017-05-11 15:07:59 $5035.0]	WARNING	swManager_check_exit_status: worker#0 abnormal exit, status=0, signal=9
+[DEBUG][0][0] - 2017-05-11 15:08:06 -->[request] from 127.0.0.1:9502 dump data::Array
+(
+    [type] => torrent_total
+)
+
+[DEBUG][0][0] - 2017-05-11 15:08:06 -->[response] 127.0.0.1:9502 echo data::771735
+[DEBUG][0][0] - 2017-05-11 15:08:43 -->[request] from 127.0.0.1:9502 dump data::Array
+(
+    [type] => torrent_total
+)
+
+[DEBUG][0][0] - 2017-05-11 15:08:43 -->[response] 127.0.0.1:9502 echo data::771735
+[2017-05-11 15:09:19 $5073.0]	WARNING	swManager_check_exit_status: worker#0 abnormal exit, status=0, signal=9
+[DEBUG][0][0] - 2017-05-11 15:26:07 -->[request] from 127.0.0.1:9502 dump data::Array
+(
+    [type] => torrent_total
+)
+
+[DEBUG][0][0] - 2017-05-11 15:26:07 -->[response] 127.0.0.1:9502 echo data::771735
