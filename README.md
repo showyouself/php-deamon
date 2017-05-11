@@ -1,8 +1,9 @@
 # Resident
 演示如何使用swoole做一个Php常驻进程
 
-一、目录及文件
+##一、目录及文件
 
+`
 /log  log目录
 
 /bin  可执行文件目录
@@ -22,4 +23,4 @@
 /bin/router.php         资源调度类
 
 /bin/task.php           自编辑类必须基础这个类
-
+`
