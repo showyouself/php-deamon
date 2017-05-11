@@ -38,7 +38,7 @@
 ## 三、使用方法
 * 自定义自己需要的类和文件，并且配置加入/bin/config.php/router_config
 * 自定义类必须继承类task
-* 接收的请求router通过get->type区分加载哪个类，并且执行run方法
+* 接收的请求后，router通过get->type区分加载哪个类，并且执行run方法
 * 请求的数据存在$this->request_data中
 * 可参考TorrentTotal
 
