@@ -64,3 +64,7 @@
 * 添加curl支持类
 * 修复redis_proxy.php中，设置timeout失败误报错误
 
+*tag v0.3*
+主要特性：
+* 修改TorrentTotal用于展示一个示例
+
