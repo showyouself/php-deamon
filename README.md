@@ -24,7 +24,7 @@
 
 /bin/curl.php           curl支持类
 
-/bin/TorrentTotal.php   自编辑类方法
+/bin/TorrentTotal.php   自定义类示例
 
 /bin/WxProxy.php        微信access_token、js_api_ticket维护支持类
 
@@ -42,10 +42,8 @@
 
 ## 三、使用方法
 * 自定义自己需要的类和文件，并且配置加入/bin/config.php/router_config
-* 自定义类必须继承类task
+* 自定义类必须继承类task，自定义类参考：TorrentTotal.php
 * 接收的请求后，router通过get->type区分加载哪个类，并且执行run方法
-* 请求的数据存在$this->request_data中
-* 可参考TorrentTotal
 * 请求示例：curl "http://127.0.0.1:9502?type=wx&sub=wx_jsapi_ticket" **type【必选】:指定执行(加载)的类**，get中的其他变量存于task.php/request_data中
 
 ## 四、目前支持模块(以及需要的环境支持)
