@@ -1,5 +1,5 @@
 # Resident
-演示如何使用swoole做一个Php常驻进程
+一个依赖于swoole编写的：Php常驻进程框架
 
 ## 一、目录及文件
 
@@ -57,14 +57,12 @@
 `./admin start`
 
 ## 六、发布日志 
-*tag v0.2* 
-主要特性：
+*tag v0.2* 主要特性：
 * 添加微信公众号access_token、js_api_ticket维护进程
 * 优化日志生成方式
 * 添加curl支持类
 * 修复redis_proxy.php中，设置timeout失败误报错误
 
-*tag v0.3*
-主要特性：
+*tag v0.3*主要特性：
 * 修改TorrentTotal用于展示一个示例
 
