@@ -1,4 +1,12 @@
 <?php 
+/*
+   自定义类示例
+   1、需要加载的类必须现在config.php/router_config中定义 
+   2、自定义类必须继承类task，并且重写run方法,将返回结果赋值给$ret。
+   3、run方法执行成功只需返回true，表示执行成功，程序会将$ret的内容输出
+   4、get获取的所有变量存储于task.php/request_data中
+   5、usage::curl "http://127.0.0.1:9502?type=torrent_total&test=1"
+*/
 class TorrentTotal extends task {
 	public function __construct($request)
 	{
@@ -7,7 +15,10 @@ class TorrentTotal extends task {
 
 	public function run(&$ret)
 	{
-		$ret = $this->tryGetTotal();
+		if (isset($this->request_data['test'])) { $ret = 'success'; }
+		else {
+			$ret = $this->tryGetTotal();
+		}
 		return true;
 	}
 
