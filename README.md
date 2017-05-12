@@ -16,7 +16,7 @@
 
 /bin/router.php         资源调度类
 
-/bin/task.php           自编辑类必须基础这个类
+/bin/task.php           自编辑类必须继承这个类
 
 /bin/db.php             mysql支持类
 
@@ -54,7 +54,7 @@
 ```
 
 ## 五、服务启动
-`./admin start`
+`./admin.sh start`
 
 ## 六、发布日志 
 *tag v0.2* 主要特性：
