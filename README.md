@@ -8,32 +8,38 @@
 
 /bin  可执行文件目录
 
-/bin/TorrentTotal.php   自编辑类方法
-
 /bin/admin.sh           进程启动|重启|停止方法 使用：./admin usage:<restart|start|stop>
-
-/bin/config.php         配置文件
-
-/bin/db.php             mysql支持类
 
 /bin/phpresident.php    主进程，即开始执行的地方
 
-/bin/redis_proxy.php    redis支持类
+/bin/config.php         配置文件
 
 /bin/router.php         资源调度类
 
 /bin/task.php           自编辑类必须基础这个类
+
+/bin/db.php             mysql支持类
+
+/bin/redis_proxy.php    redis支持类
+
+/bin/curl.php           curl支持类
+
+/bin/TorrentTotal.php   自编辑类方法
+
+/bin/WxProxy.php        微信access_token、js_api_ticket维护支持类
+
 ```
 
 ## 二、环境支持
-
-请检查当前环境是否支持 *swoole*
+```
+【必选】请检查当前环境是否支持 *swoole*
 使用命令`php --info |grep swoole` 查看是否已经启动swoole模块；[编译安装swoole](http://zengbingo.com/p/268.html)
 
-如果要使用 *redis* ，配置：/bin/config.php/redis_config
+【可选】如果要使用 *redis* ，配置：/bin/config.php/redis_config
 使用命令`php --info |grep redis` 查看是否已经启动swoole模块；[安装配置redis(php)](http://zengbingo.com/p/392.html)
 
-如果要使用 *mysql* ，配置：/bin/config.php/db_config
+【可选】如果要使用 *mysql* ，配置：/bin/config.php/db_config
+```
 
 ## 三、使用方法
 * 自定义自己需要的类和文件，并且配置加入/bin/config.php/router_config
@@ -41,6 +47,23 @@
 * 接收的请求后，router通过get->type区分加载哪个类，并且执行run方法
 * 请求的数据存在$this->request_data中
 * 可参考TorrentTotal
+* 请求示例：curl "http://127.0.0.1:9502?type=wx&sub=wx_jsapi_ticket" type:指定执行(加载)的类，get中的其他变量存于task.php/request_data中
 
-## 服务启动
+## 四、目前支持模块(以及需要的支持环境)
+```
+模块：WxProxy.php
+模块名称：微信token\jsTicket维护
+需要环境：redis、curl
+```
+
+## 五、服务启动
 `./admin start`
+
+## 六、发布日志 
+*tag v0.2* 
+主要特性：
+* 添加微信公众号access_token、js_api_ticket维护进程
+* 优化日志生成方式
+* 添加curl支持类
+* 修复redis_proxy.php中，设置timeout失败误报错误
+
