@@ -1,5 +1,5 @@
 # Resident
-一个依赖于swoole编写的：Php常驻进程框架
+一个基于swoole编写的 ：Php常驻进程框架
 
 ## 一、目录及文件
 
