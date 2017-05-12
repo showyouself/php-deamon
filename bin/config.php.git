@@ -4,7 +4,7 @@ $config = array();
 function log_config()
 {
 	return array(
-			'log_level' => 1, //0、仅打印错误ERROR信息， 1、打印DEBUG信息
+			'log_level' => 0, //0、仅打印错误ERROR信息， 1、打印DEBUG信息
 			);
 }
 
@@ -12,6 +12,7 @@ function log_config()
 function router_config() {
 	return array(
 			'torrent_total' => 'TorrentTotal', 
+			'wx' => 'WxProxy',
 			);
 }
 
@@ -29,7 +30,7 @@ function db_config()
 function redis_config()
 {
 	return array(
-			'host' => '127.0.0.1',
+			'host' => '',
 			'port' => '',
 			);
 }
@@ -39,18 +40,27 @@ function swoole_config()
 	return array(
 			'log_file' => getenv("PWD")."/../log/phpdeamon.log",  //这里配置日志打印目录
 			'log_level' => 0,
-			'daemonize' => 1,
+			'daemonize' => 1,			// 1、后台运行(守护进程),0、调试时使用
 			);
 }
 
 //日志打印
-function logger($level, $msg, $id = 0, $type = 0){ 
+function logger($level, $msg, $trace_arr = array()) { 
 	do {
 		if (log_config()['log_level'] == 0 AND strtoupper($level) != "ERROR") { break; }
-		echo "[$level][$id][$type] - ".date("Y-m-d H:i:s",time()).' -->'.$msg.PHP_EOL; 
+		echo "[$level][" . implode("][",$trace_arr) . "] - " . date("Y-m-d H:i:s",time()) . ' -->' . $msg . PHP_EOL; 
 	}while(0);
 }
 
+
+function nonce_str($length = 16) {
+	$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	$str = "";
+	for ($i = 0; $i < $length; $i++) {
+		$str .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
+	}
+	return $str;
+}
 
 define('REDIS_TORRENT_KEY', 'torrent_total');
 define('REDIS_TORRENT_EXPIRE', 300);

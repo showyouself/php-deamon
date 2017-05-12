@@ -15,10 +15,10 @@ class redis_proxy{
 
 	public function set_string($key, $string, $expire = NULL) { 
 		if (!$this->redis->set($key, $string)) 
-		{ logger("ERROR", "reids key is already set：$key"); return false; } 
+		{ logger("ERROR", "reids key is already set：$key", array(__CLASS__, __FUNCTION__)); return false; } 
 
-		if (!empty($expire) AND is_numeric($expire) AND $this->set_expire($key, $expire))
-		{ logger("ERROR", "reids set expire failed key：$key"); return false;}
+		if (!empty($expire) AND is_numeric($expire) AND !$this->set_expire($key, $expire))
+		{ logger("ERROR", "reids set expire failed key：$key", array(__CLASS__, __FUNCTION__)); return false;}
 
 		return true;
 	}
