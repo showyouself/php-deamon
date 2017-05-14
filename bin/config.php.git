@@ -26,7 +26,7 @@ function processer_config(){
 	return array(
 			array(
 				'run_interval' => 5, //进程每间隔多少秒执行一次run
-				'name' => 'ExampleProcesser', //进程名称，同时也是类名、文件名
+				'name' => 'ExampleProcess', //进程名称，同时也是类名、文件名
 				'file_base_path' => './', //文件路径默认为./
 				'arg' => array('count' => 1),	//进程每次执行run传入的变量,该变量可在进程内部进行修改
 				),	

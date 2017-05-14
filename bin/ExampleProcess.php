@@ -5,7 +5,7 @@
    2、自定义类必须继承类task，并且重写run方法,将返回结果赋值给$ret。
    3、run方法执行成功只需返回true，表示执行成功，return false表示错误，run不再继续执行
 */
-class ExampleProcesser extends task {
+class ExampleProcess extends task {
 	public function __construct($request)
 	{
 		parent::__construct($request);
