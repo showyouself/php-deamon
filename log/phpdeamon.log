@@ -2331,3 +2331,4 @@
 [2017-05-14 14:59:49 @14592.0]	ERROR	zm_deactivate_swoole (ERROR 503): Fatal error: Class 'example_processer' not found in /home/ben/work/swoole/phpdeamon/bin/trigger_processer.php on line 29.
 [2017-05-14 14:59:49 @14593.0]	ERROR	zm_deactivate_swoole (ERROR 503): Fatal error: Class 'example_processer' not found in /home/ben/work/swoole/phpdeamon/bin/trigger_processer.php on line 29.
 [2017-05-14 14:59:49 @14594.0]	ERROR	zm_deactivate_swoole (ERROR 503): Fatal error: Class 'example_processer' not found in /home/ben/work/swoole/phpdeamon/bin/trigger_processer.php on line 29.
+
