@@ -79,7 +79,7 @@
 *tag v0.3*主要特性：
 * 修改TorrentTotal用于展示一个示例
 
-*tag v20170514-add-process-func*主要特性：
+*tag v0.4*主要特性：
 * 新增进程处理类trigger_processer.php
 * 新增ExampleProcess.php示例演示进程方法
 * phpresident.php/config.php 修改以支持子进程处理
