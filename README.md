@@ -70,14 +70,6 @@
 `./admin.sh start`
 
 ## 六、发布日志 
-*tag v0.2* 主要特性：
-* 添加微信公众号access_token、js_api_ticket维护进程
-* 优化日志生成方式
-* 添加curl支持类
-* 修复redis_proxy.php中，设置timeout失败误报错误
-
-*tag v0.3*主要特性：
-* 修改TorrentTotal用于展示一个示例
 
 *tag v0.4*主要特性：
 * 新增进程处理类trigger_processer.php
@@ -86,4 +78,11 @@
 * 将config.php文件中的通用函数移动至misc.php
 * 修改Torrent_Total的名称为ExampleHttp.php
 
+*tag v0.3*主要特性：
+* 修改TorrentTotal用于展示一个示例
 
+*tag v0.2* 主要特性：
+* 添加微信公众号access_token、js_api_ticket维护进程
+* 优化日志生成方式
+* 添加curl支持类
+* 修复redis_proxy.php中，设置timeout失败误报错误
