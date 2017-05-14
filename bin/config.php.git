@@ -1,18 +1,35 @@
 <?php
 $config = array();
 
+//日志配置
 function log_config()
 {
 	return array(
-			'log_level' => 0, //0、仅打印错误ERROR信息， 1、打印DEBUG信息
+			'log_level' => 1, //0、仅打印错误ERROR信息， 1、打印DEBUG信息
 			);
 }
 
-//key：为请求的type值，value为实例化的类(文件名与类名相同)
+/*自定义[http]处理类：
+  key：为请求的type值
+  value：为实例化的类(文件名与类名相同)
+ */
 function router_config() {
 	return array(
-			'torrent_total' => 'TorrentTotal', 
+			'torrent_total' => 'ExampleHttp', 
 			'wx' => 'WxProxy',
+			);
+}
+
+/*自定义进程[processer]：
+*/
+function processer_config(){
+	return array(
+			array(
+				'run_interval' => 5, //进程每间隔多少秒执行一次run
+				'name' => 'ExampleProcesser', //进程名称，同时也是类名、文件名
+				'file_base_path' => './', //文件路径默认为./
+				'arg' => array('count' => 1),	//进程每次执行run传入的变量,该变量可在进程内部进行修改
+				),	
 			);
 }
 
@@ -27,6 +44,7 @@ function db_config()
 			);
 }
 
+/*redis配置*/
 function redis_config()
 {
 	return array(
@@ -35,33 +53,13 @@ function redis_config()
 			);
 }
 
+/*swoole配置*/
 function swoole_config()
 {
 	return array(
 			'log_file' => getenv("PWD")."/../log/phpdeamon.log",  //这里配置日志打印目录
 			'log_level' => 0,
-			'daemonize' => 1,			// 1、后台运行(守护进程),0、调试时使用
+			'daemonize' => 0,	//0、调试，1、后台执行
 			);
 }
-
-//日志打印
-function logger($level, $msg, $trace_arr = array()) { 
-	do {
-		if (log_config()['log_level'] == 0 AND strtoupper($level) != "ERROR") { break; }
-		echo "[$level][" . implode("][",$trace_arr) . "] - " . date("Y-m-d H:i:s",time()) . ' -->' . $msg . PHP_EOL; 
-	}while(0);
-}
-
-
-function nonce_str($length = 16) {
-	$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-	$str = "";
-	for ($i = 0; $i < $length; $i++) {
-		$str .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
-	}
-	return $str;
-}
-
-define('REDIS_TORRENT_KEY', 'torrent_total');
-define('REDIS_TORRENT_EXPIRE', 300);
 ?>
