@@ -3,6 +3,16 @@
 cd /home/ben/work/swoole/phpdeamon/bin
 process="phpresident.php"
 
+usage(){
+	echo "usage:<restart|start|stop>"
+}
+
+if [ ! -n "$1" ]
+then
+	usage;
+	exit;
+fi
+
 #接受信号
 if [ $1 == "stop" ]
 then
@@ -21,6 +31,6 @@ elif [ $1 == "status" ]
 then 
 	ps -ef|grep $process
 else
-	echo "usage:<restart|start|stop>"
+	usage;
 fi
 
