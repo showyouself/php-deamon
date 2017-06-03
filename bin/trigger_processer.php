@@ -45,6 +45,7 @@ class trigger_processer{
 				logger("ERROR", "calss $this->p_name run is return false");
 				return false;
 			}
+			logger("ERROR", "calss $this->p_name do running");
 
 		}
 	}
