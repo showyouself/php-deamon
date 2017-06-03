@@ -58,6 +58,7 @@
 * 自定义类必须继承类task，可参考：ExampleProcess.php
 * 设置run_interval来使程序定时执行run函数
 * run函数需返回true表示执行成功，返回false将不再继续循环执行
+* 自定义进程的如果使用logger方法打印日志，请在admin.sh中配置log的地址
 
 ## 四、目前支持模块(以及需要的环境支持)
 ```
@@ -70,6 +71,10 @@
 `./admin.sh start`
 
 ## 六、发布日志 
+
+*tag v0.5*主要特性：
+* 优化log打印
+* admin中新增子程序log地址
 
 *tag v0.4*主要特性：
 * 新增进程处理类trigger_processer.php
