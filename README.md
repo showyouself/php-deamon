@@ -41,7 +41,7 @@
 使用命令`php --info |grep swoole` 查看是否已经启动swoole模块；**[编译安装swoole](http://zengbingo.com/p/268.html)**
 
 【可选】如果要使用 *redis* ，配置：/bin/config.php/redis_config
-使用命令`php --info |grep redis` 查看是否已经启动swoole模块；**[安装配置redis(php)](http://zengbingo.com/p/392.html)**
+使用命令`php --info |grep redis` 查看是否已经启动redis模块；**[安装配置redis(php)](http://zengbingo.com/p/392.html)**
 
 【可选】如果要使用 *mysql* ，配置：/bin/config.php/db_config
 
