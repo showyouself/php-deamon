@@ -36,17 +36,30 @@ class trigger_processer{
 
 	}
 
-	public function run($process) {
+	public function run($serv, $process) {
 		if (!$this->init()) { return false; }
+		$task = $this->task;
+		$arg = $this->arg;
+		$cycle_flag = true;
+		$lock_file = log_config()['log_file'].'/'.$this->p_name.'.lock';
+		@unlink($lock_file);
+
 		while (true) 
 		{
 			sleep($this->run_interval);
-			if (!$this->task->run($this->arg)) {
-				logger("ERROR", "calss $this->p_name run is return false");
-				return false;
+			if (!file_exists($lock_file)) {
+				$son_process = new swoole_process(function ($son_process) use ($task, $arg, $lock_file){
+					$ret = $task->run($arg);
+					if ($ret === false) {
+						logger("error", "processer $this->p_name run is return false");
+						return;
+					}
+					unlink($lock_file);
+				});	
+				$son_process->start();
+				fopen($lock_file, 'w');
 			}
-			logger("ERROR", "calss $this->p_name do running");
-
+			logger("debug", "processer $this->p_name is not run over");
 		}
 	}
 }

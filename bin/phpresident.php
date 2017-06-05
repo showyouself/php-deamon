@@ -32,20 +32,18 @@ $serv->on('request', function ($data, $resp) use ($router) {
 			});
 //启动服务器
 logger("DEBUG", "服务器启动成功");
-
-
 //自定义进程[processer]
 require_once("trigger_processer.php");
 if (!empty(processer_config())) {
 	foreach (processer_config() as $p_v) {
 		$process = new swoole_process(function ($process) use ($serv, $p_v){
-				$new = new trigger_processer($p_v);	
+				$task_tmpl = new ReflectionClass('trigger_processer');
 				logger("DEBUG", "添加自定义进程 ".$p_v['name']);
-				$new->run($process);
-				});	
-		$process->start();
-	}	
-}
+				call_user_func_array(array($task_tmpl->newInstance($p_v), 'run'), array($serv, $process));
+				}); 
+		$serv->addProcess($process);
+	}    
+}   
 
 $serv->start(); 
 ?>

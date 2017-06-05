@@ -29,7 +29,13 @@ class db
 
 	public function sql($sql) { 
 		$this->clean_result();
-		$this->result = $this->conn->query($sql);
+		$this->result = @$this->conn->query($sql);
+		if ($this->conn->error) {
+			logger("ERROR","reconnec to mysql ," . $this->conn->error); 
+			$this->tryConn(); 
+			$this->clean_result();
+			$this->result = $this->conn->query($sql);
+		}
 		if (!$this->result) { logger("ERROR", "query failed, sql:{$sql}，" . $this->conn->error); return false; }
 		return $this; 
 	}

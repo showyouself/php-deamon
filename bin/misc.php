@@ -3,7 +3,14 @@
 function logger($level, $msg, $trace_arr = array()) { 
 	do {
 		if (log_config()['log_level'] == 0 AND strtoupper($level) != "ERROR") { break; }
-		echo "[$level][" . implode("][",$trace_arr) . "] - " . date("Y-m-d H:i:s",time()) . ' -->' . $msg . PHP_EOL; 
+		$message = "[$level][" . implode("][",$trace_arr) . "] - " . date("Y-m-d H:i:s",time()) . ' -->' . $msg . PHP_EOL; 
+		if ( $fp = @fopen(log_config()['log_file'].'/phpdeamon.log', 'a+'))
+		{
+			flock($fp, LOCK_EX);
+			fwrite($fp, $message);
+			flock($fp, LOCK_UN);
+			fclose($fp);
+		}
 	}while(0);
 }
 

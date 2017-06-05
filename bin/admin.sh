@@ -2,7 +2,6 @@
 #移动到运行命令
 cd /home/ben/work/swoole/phpdeamon/bin
 process="phpresident.php"
-log="/home/ben/work/swoole/phpdeamon/log/phpdeamon.log"
 
 usage(){
 	echo "usage:<restart|start|stop>"
@@ -21,12 +20,12 @@ then
 	echo "stop success"
 elif [ $1 == "start" ]
 then	
-	php $process >> $log
+	php $process 
 	echo "start success"
 elif [ $1 == "restart" ]
 then 
 	`kill -9 $(ps -ef|grep $process|grep -v "grep"|awk '{print $2}')`
-	php $process >> $log
+	php $process 
 	echo "restart success"
 elif [ $1 == "status" ]
 then 

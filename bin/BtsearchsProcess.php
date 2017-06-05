@@ -36,7 +36,7 @@ class BtsearchsProcess{
 		if(empty($this->db)) { $this->db = new db(db_config()); }	
 	}
 
-	public function run(&$ret)
+	public function run($ret)
 	{
 		$this->init();
 
@@ -49,6 +49,7 @@ class BtsearchsProcess{
 		$this->setRunStart();
 		
 		$tags = $this->getSearchTag();
+		if (!$tags) { return false; }
 		logger("ERROR", "[NOTICE]do scrawl：".print_r($tags, true));
 		foreach($tags as $t) 
 		{
@@ -62,7 +63,6 @@ class BtsearchsProcess{
 					$retry ++ ;
 					logger("DEBUG", "retry for {$t}：{$page}");
 				}else { $page++; }	
-				sleep(1);
 			}while(1);
 		}
 
@@ -78,6 +78,7 @@ class BtsearchsProcess{
 				'benyecili' => array('#benyecili','text'),
 				);
 		$hj = new QueryList($url, $reg, $regRange, 'curl', 'UTF-8');
+		logger("DEBUG", "doScrawl for {$url} ");
 		if ($hj->html and !empty($hj->jsonArr[0]['benyecili'])) {
 			$arr = explode("\n", $hj->jsonArr[0]['benyecili']);
 			foreach($arr as $a) 
@@ -85,11 +86,15 @@ class BtsearchsProcess{
 				$tmp = explode('&' , $a);
 				if (count($tmp) < 2) { continue; }
 				$data = $this->build(end(explode(":", $tmp[0])), str_replace("dn=", "", $tmp[1]));
-				$ret = $this->sync_post($data);
-				logger("DEBUG", "doScrawl for {$url} result：".print_r($ret, true));
+				$this->sync_post($data);
 			} 
 			return true;
 		}
+/*		logger("ERROR", "fail to doscrawl for {$url} "
+				."\nreg : ".print_r($reg, true)
+				."regRange : ".$regRange
+				."scrwal raw: \n".print_r($hj->html, true)
+				);*/
 		return false;
 	}
 
@@ -131,14 +136,18 @@ class BtsearchsProcess{
 
 	private function getSearchTag()
 	{
-		return array( $this->getFromRedis());
+		$ret = $this->getFromRedis();
+		if ($ret) {
+			return array( $ret );
+		}
+		return false;
 	}
 
 	private function getFromRedis()
 	{
 		$tag = $this->redis->get_ins()->rpop(BTSEARCHS_TAGS);
 		if (empty($tag)) {
-			$this->setToRedis();
+			if (!$this->setToRedis()) { return false; }
 			$tag = $this->redis->get_ins()->rpop(BTSEARCHS_TAGS);
 		}
 		logger("DEBUG", "get tag".$tag);
@@ -157,9 +166,11 @@ class BtsearchsProcess{
 		if ($this->db->sql("SELECT * FROM `tags`  where id > $id  ORDER BY `id` ASC limit 10 ")) 
 		{ $result = $this->db->result_array(); }
 
-		if (empty($result)) { logger('ERROR','do select from mysql failed'); }
+		if (empty($result)) { logger('ERROR','do select from mysql failed'); return false; }
 
 		foreach ($result as $r) { $this->redis->get_ins()->lpush(BTSEARCHS_TAGS, $r['name']); }
+
+		return true;
 	}
 
 	public function strToHex($string)//字符串转十六进制
@@ -180,8 +191,9 @@ class BtsearchsProcess{
 	}
 
 }
-
+/*
 $test = new  BtsearchsProcess();
 $test->init();
 $ret = array('sync_url' => 'http://torrent.zengbingo.com/Home/Api/sync_magnet/sign/9BF4D5BC9A62');
 $test->run($ret);
+*/

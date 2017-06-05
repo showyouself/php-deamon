@@ -6,6 +6,7 @@ function log_config()
 {
 	return array(
 			'log_level' => 1, //0、仅打印错误ERROR信息， 1、打印DEBUG信息
+			'log_file' =>"",  //这里配置自定义进程日志打印目录
 			);
 }
 
@@ -31,6 +32,7 @@ function processer_config(){
 				'arg' => array('count' => 1),	//进程每次执行run传入的变量,该变量可在进程内部进行修改
 				),	
 			);
+
 }
 
 //mysql数据库配置

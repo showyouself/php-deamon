@@ -11,11 +11,12 @@ class ExampleProcess extends task {
 		parent::__construct($request);
 	}
 
-	public function run(&$ret)
+	public function run($ret)
 	{
+		//$ret中的变量仅用于初始化这一次的run
 		logger("DEBUG", "进程 example_processer 执行{$ret['count']}次");
 		$ret['count'] += 1;
-		return false;
-//		return true;
+//		return false;
+		return true;
 	}
 }
