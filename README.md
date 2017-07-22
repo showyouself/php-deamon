@@ -74,6 +74,13 @@ tip:进程会通过生成子进程的方式去执行run函数，所以每次run�
 
 ## 六、发布日志 
 
+*tag v0.8*主要特性：
+* 修改trigger_processer.php,避免僵尸进程
+
+*tag v0.7*主要特性：
+* 修改processer默认日志路径
+* 修复demo，ExampleProcess.php 中的bug
+
 *tag v0.6*主要特性：
 * 优化log打印
 * 优化自定义进程启动运行方式,避免内存过分溢出
