@@ -48,6 +48,7 @@ class trigger_processer{
 		{
 			sleep($this->run_interval);
 			if (!file_exists($lock_file)) {
+				swoole_process::wait();
 				$son_process = new swoole_process(function ($son_process) use ($task, $arg, $lock_file){
 					$ret = $task->run($arg);
 					if ($ret === false) {
@@ -55,9 +56,10 @@ class trigger_processer{
 						return;
 					}
 					unlink($lock_file);
-				});	
-				$son_process->start();
+					$son_process->exit();
+				});
 				fopen($lock_file, 'w');
+				$son_process->start();
 			}
 			logger("debug", "processer $this->p_name is not run over");
 		}
