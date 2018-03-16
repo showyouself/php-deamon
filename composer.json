@@ -1,0 +1,10 @@
+{
+    "name": "ben/yii2-resident",
+    "authors": [
+        {
+            "name": "zengbin",
+            "email": "mark.zeng@yingzt.com"
+        }
+    ],
+    "require": {}
+}
