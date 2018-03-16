@@ -1,5 +1,7 @@
 {
     "name": "zengbin/yii2-resident",
+    "description":"一个基于swoole编写的 ：Php常驻进程框架",
+    "license": "MIT",
     "authors": [
         {
             "name": "zengbin",
