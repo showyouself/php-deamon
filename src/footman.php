@@ -43,13 +43,17 @@ class footman{
      */
     public function __construct($processConfig, $swooleConfig = null)
     {
-        if ($swooleConfig) {  $this->swooleConfig = $swooleConfig; }
+        if ($swooleConfig && is_array($swooleConfig)) {
+            foreach ($swooleConfig as $key => $value) { $this->swooleConfig[$key] = $value; }
+        }
 
         if (!is_array($this->processConfig)) { throw new \Exception('processConfig must be array'); }
 
         $this->processConfig = $processConfig;
 
     }
+
+
 
     public function run(){
         if (!$this->tryInitRootProcess()) {
