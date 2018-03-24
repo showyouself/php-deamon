@@ -12,6 +12,6 @@
     "require": {
         "php" : ">=5",
         "Yii" : ">2",
-        "swoole-ext" : "v2.0.11",
+        "swoole-ext" : "v2.0.11"
     }
 }
