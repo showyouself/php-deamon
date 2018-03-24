@@ -34,7 +34,7 @@ $swooleConfig主进程配置
 <?php
 namespace app\commands;
 use yii\console\Controller;
-use zengbin\footman;
+use zbin\footman;
 
 class HelloController extends Controller
 {
