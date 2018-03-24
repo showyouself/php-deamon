@@ -18,9 +18,9 @@
         "Yii" : ">2.*",
         "swoole-ext" : ">=2.0.11"
     },
-    "autoload" : [
-        "psr-0" : {
-            "zbin\\" : "src"
-        }
-    ]
+    "autoload" : {
+      "psr-0": {
+        "zbin\\": "src"
+      }
+    }
 }
