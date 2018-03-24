@@ -1,107 +1,84 @@
-# Resident
-一个基于swoole编写的 ：Php常驻进程框架
+# php-deamon
+php守护进程框架
 
-## 一、目录及文件
+## 使用场景
+需要一个程序一直在console循环执行，例如轮询消费队列消息等。
 
+## 一、安装
 ```
-/log  log目录
-
-/bin  可执行文件目录
-
-/bin/admin.sh           进程启动|重启|停止方法 使用：./admin usage:<restart|start|stop>
-
-/bin/phpresident.php    主进程，即开始执行的地方
-
-/bin/config.php         配置文件
-
-/bin/misc.php           通用函数
-
-/bin/router.php         资源调度类
-
-/bin/trigger_processer.php 进程处理类
-
-/bin/task.php           自编辑类必须继承这个类
-
-/bin/db.php             mysql支持类
-
-/bin/redis_proxy.php    redis支持类
-
-/bin/curl.php           curl支持类
-
-/bin/ExampleHttp.php      [自定义]自定义http类示例
-
-/bin/ExampleProcess.php   [自定义]自定义进程类示例
-
-/bin/WxProxy.php        [自定义]微信access_token、js_api_ticket维护支持类
-
+composer require zbin/php-deamon
 ```
 
-## 二、环境支持
-【必选】请检查当前环境是否支持 *swoole*
-使用命令`php --info |grep swoole` 查看是否已经启动swoole模块；**[编译安装swoole](http://zengbingo.com/p/268.html)**
+## 相关配置
+$processConfig轮询脚本配置
+* action_path ：执行的脚本格式"控制器/方法"
+* run_interval ：运行间隔(秒)
+* param ： 传入参数
 
-【可选】如果要使用 *redis* ，配置：/bin/config.php/redis_config
-使用命令`php --info |grep redis` 查看是否已经启动redis模块；**[安装配置redis(php)](http://zengbingo.com/p/392.html)**
-
-【可选】如果要使用 *mysql* ，配置：/bin/config.php/db_config
-
-
-## 三、使用方法
-### 一、自定义http类
-* 自定义自己需要的类和文件，并且配置加入/bin/config.php/router_config
-* 自定义类必须继承类task，可参考：ExampleHttp.php
-* 接收的请求后，router通过get->type区分加载哪个类，并且执行run方法
-* 请求示例：curl "http://127.0.0.1:9502?type=wx&sub=wx_jsapi_ticket" **type【必选】:指定执行(加载)的类**，get中的其他变量存于task.php/request_data中
-
-### 二、自定义进程类
-* 自定义自己需要的类和文件，并且配置加入/bin/config.php/processer_config
-* 自定义类必须继承类task，可参考：ExampleProcess.php
-* 设置run_interval来使程序定时执行run函数
-* run函数需返回true表示执行成功，返回false将不再继续循环执行
-* 自定义进程的打印日志同样适用Logger方法，并且需要在config.php中配置log的地址
-
-tip:进程会通过生成子进程的方式去执行run函数，所以每次run执行完，内存都会释放掉，即：传入run中的参数应该是不可编辑的
-
-## 四、目前支持模块(以及需要的环境支持)
+$swooleConfig主进程配置
+* daemonize ：0:debug，1:后台运行
+* foot_ip ：ip
+* foot_port ： 监听端口，swoole默认9501
+* message_queue_id ：轮询脚本反馈消息队列id，例如：0x0104a8a2
 ```
-模块：[http]WxProxy.php
-模块名称：微信token\jsTicket维护
-需要环境：redis
+ $new = new footman($processConfig, $swooleConfig);
 ```
 
-## 五、服务启动
-`./admin.sh start`
+## 二、在框架中使用
 
-## 六、发布日志 
+### yii2框架
+新建一个footman对象，传入processConfig数组，如下脚本在每次执行完成后间隔的时间
+* commands/SonController.php/actionTest 间隔10秒执行一次
+* commands/SunController.php/actionRun 间隔5秒执行一次
+```
+<?php
+namespace app\commands;
+use yii\console\Controller;
+use zengbin\footman;
 
-*tag v0.8*主要特性：
-* 修改trigger_processer.php,避免僵尸进程
+class HelloController extends Controller
+{
+    public function actionIndex($message = 'hello world')
+    {
+        $processConfig = [
+            [
+                'action_path' => 'sub/run',
+                'run_interval' => 5,
+                'param' => ['ben', 25,]
+            ],
+            [
+                'action_path' => 'son/test',
+                'run_interval' => 10,
+                'param' => ['zeng', 2018,]
+            ]
+        ];
+        // run in background 后台运行
+        // $swooleConfig = ['daemonize' => 1]; 
+        // $new = new footman($processConfig, $swooleConfig);
+        $new = new footman($processConfig);
+        $new->run();
+    }
+}
+```
+## 三、查看运行状态
+直接使用http请求host:9501端口，即可得到运行状态，目前支持的入参为：
+* show : 1、detail 
+* action_path : 循环执行的脚本名 例如：sub-run
+```
+curl "127.0.0.1:9501?show=detail"
+或者(如果不希望浏览器可以访问，建议关闭出网端口)
+view-source:http://127.0.0.1:9501/?show=detail
+```
+得到的结果如下：
+```
+<<=========[son/test]=========>>
+run_count : 36
+run_interval : 10
+last_start_time : 2018-03-24 06:37:20
+last_end_time : 2018-03-24 06:37:20
+last_run_msg : success
+last_run_ret : 0
+run_param : ["ben",25]
+```
 
-*tag v0.7*主要特性：
-* 修改processer默认日志路径
-* 修复demo，ExampleProcess.php 中的bug
 
-*tag v0.6*主要特性：
-* 优化log打印
-* 优化自定义进程启动运行方式,避免内存过分溢出
-* 取消admin中log输出，转而在config中新增子进程日志打印配置
-
-*tag v0.5*主要特性：
-* 优化log打印
-* admin中新增子程序log地址
-
-*tag v0.4*主要特性：
-* 新增进程处理类trigger_processer.php
-* 新增ExampleProcess.php示例演示进程方法
-* phpresident.php/config.php 修改以支持子进程处理
-* 将config.php文件中的通用函数移动至misc.php
-* 修改Torrent_Total的名称为ExampleHttp.php
-
-*tag v0.3*主要特性：
-* 修改TorrentTotal用于展示一个示例
-
-*tag v0.2* 主要特性：
-* 添加微信公众号access_token、js_api_ticket维护进程
-* 优化日志生成方式
-* 添加curl支持类
-* 修复redis_proxy.php中，设置timeout失败误报错误
