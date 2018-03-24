@@ -7,9 +7,6 @@
  * how to install swoole :: http://zengbingo.com/p/268.html
  */
 namespace zbin;
-function footman_process_list () {
-
-}
 class footman{
     //swoole default port
     protected $swooleConfig = array(
@@ -118,7 +115,7 @@ class footman{
     }
 
     private function runMlsasterProcess(){
-        require_once ('trigger_processer.php');
+        require_once('trigger_processer.php');
         foreach ($this->processConfig as $config) {
             $master_process = new trigger_processer();
             $process = new \swoole_process(function ($process) use ($master_process, $config){

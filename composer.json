@@ -1,17 +1,26 @@
 {
     "name": "zbin/php-deamon",
     "description":"Php守护进程框架",
+    "type":"library",
+    "keywords" : ["php-deamon", "守护进程", "php守护进程", "yii2守护进程"],
     "homepage": "https://github.com/showyouself/php-deamon",
+    "time" : "2018-03-24",
     "license": "MIT",
     "authors": [
         {
             "name": "zengbin",
-            "email": "mark.zeng@yingzt.com"
+            "email": "200854748@qq.com",
+            "homepage" : "https://github.com/showyouself"
         }
     ],
     "require": {
         "php" : ">=5.6.1",
-        "Yii" : ">2",
-        "swoole-ext" : "v2.0.11"
-    }
+        "Yii" : ">2.*",
+        "swoole-ext" : ">=2.0.11"
+    },
+    "autoload" : [
+        "psr-0" : {
+            "zbin\\" : "src"
+        }
+    ]
 }
