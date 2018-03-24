@@ -1,6 +1,7 @@
 {
-    "name": "zengbin/yii2-resident",
-    "description":"一个基于swoole编写的 ：Php常驻进程框架",
+    "name": "zbin/php-deamon",
+    "description":"Php守护进程框架",
+    "homepage": "https://github.com/showyouself/php-deamon",
     "license": "MIT",
     "authors": [
         {
@@ -8,5 +9,9 @@
             "email": "mark.zeng@yingzt.com"
         }
     ],
-    "require": {}
+    "require": {
+        "php" : ">=5",
+        "Yii" : ">2",
+        "swoole-ext" : "v2.0.11",
+    }
 }
