@@ -15,8 +15,10 @@
     ],
     "require": {
         "php" : ">=5.6.1",
-        "yiisoft/yii2" : ">2.0.0",
-        "matyhtf/swoole_framework" : ">=2.0.11"
+        "yiisoft/yii2" : ">2.0.0"
+    },
+    "suggest" : {
+      "matyhtf/swoole_framework" : ">=2.0.11"
     },
     "autoload" : {
       "psr-0": {
