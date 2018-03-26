@@ -1,6 +1,6 @@
 {
     "name": "zbin/php-deamon",
-    "description":"Php守护进程框架",
+    "description":"基于swoole守护进程，目前支持框架：yii2",
     "type":"library",
     "keywords" : ["php-deamon", "守护进程", "php守护进程", "yii2守护进程", "yii2", "swoole", "让yii2跑在swoole上"],
     "homepage": "https://github.com/showyouself/php-deamon",
