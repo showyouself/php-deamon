@@ -21,7 +21,7 @@
       "matyhtf/swoole_framework" : ">=2.0.11"
     },
     "autoload" : {
-      "psr-0": {
+      "psr-4": {
         "zbin\\": "src"
       }
     }
