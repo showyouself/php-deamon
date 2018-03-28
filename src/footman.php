@@ -121,7 +121,7 @@ class footman{
         return true;
     }
 
-    private function runMlsasterProcess(){
+    private function runMasterProcess(){
         require_once('trigger_processer.php');
         foreach ($this->processConfig as $config) {
             $master_process = new trigger_processer();
