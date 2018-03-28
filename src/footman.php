@@ -43,6 +43,9 @@ class footman{
      */
     public function __construct($processConfig, $swooleConfig = null)
     {
+        if (!class_exists('swoole_http_server')) {
+            exit('swoole_http_server init failed, check swoole installed first!' . "\n");
+        }
         if ($swooleConfig && is_array($swooleConfig)) {
             foreach ($swooleConfig as $key => $value) { $this->swooleConfig[$key] = $value; }
         }
